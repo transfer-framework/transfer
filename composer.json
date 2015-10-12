@@ -1,3 +1,4 @@
+{
   "name":         "transfer/transfer",
   "type":         "library",
   "description":  "Data processing framework",
