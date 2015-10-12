@@ -9,14 +9,14 @@
 
 namespace Transfer\Console\Command\Manifest;
 
-use Transfer\Exception\ManifestNotFoundException;
-use Transfer\Manifest\ManifestInterface;
-use Transfer\Procedure\Procedure;
-use Transfer\Procedure\ProcedureBuilder;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Transfer\Exception\ManifestNotFoundException;
+use Transfer\Manifest\ManifestInterface;
+use Transfer\Procedure\Procedure;
+use Transfer\Procedure\ProcedureBuilder;
 
 /**
  * Command for describing a manifest in a manifest chain.
@@ -33,8 +33,7 @@ class DescribeCommand extends ManifestCommand
         $this
             ->setName('manifest:describe')
             ->setDescription('Describe a specific manifest')
-            ->addArgument('name', InputArgument::OPTIONAL, 'Name of the manifest')
-        ;
+            ->addArgument('name', InputArgument::OPTIONAL, 'Name of the manifest');
     }
 
     /**

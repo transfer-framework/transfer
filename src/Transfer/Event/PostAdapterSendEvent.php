@@ -9,10 +9,10 @@
 
 namespace Transfer\Event;
 
+use Symfony\Component\EventDispatcher\Event;
+use Transfer\Adapter\OutputAdapterInterface;
 use Transfer\Adapter\Transaction\Request;
 use Transfer\Adapter\Transaction\Response;
-use Transfer\Adapter\OutputAdapterInterface;
-use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Event triggered after an output adapter returns a response.

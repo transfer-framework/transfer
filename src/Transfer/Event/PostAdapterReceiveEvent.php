@@ -9,9 +9,9 @@
 
 namespace Transfer\Event;
 
-use Transfer\Adapter\Transaction\Response;
-use Transfer\Adapter\InputAdapterInterface;
 use Symfony\Component\EventDispatcher\Event;
+use Transfer\Adapter\InputAdapterInterface;
+use Transfer\Adapter\Transaction\Response;
 
 /**
  * Event triggered after an input adapter returns a response.

@@ -27,8 +27,7 @@ class ManifestChainTest extends \PHPUnit_Framework_TestCase
 
         $chain
             ->addManifest($manifest)
-            ->addManifest($manifest)
-        ;
+            ->addManifest($manifest);
 
         $this->assertCount(1, $chain->getManifests());
 

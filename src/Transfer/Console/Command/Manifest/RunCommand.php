@@ -40,8 +40,7 @@ class RunCommand extends ManifestCommand
             ->setName('manifest:run')
             ->setDescription('Run a specific manifest')
             ->addArgument('name', InputArgument::OPTIONAL, 'Name of the manifest')
-            ->addOption('input', 'i', InputOption::VALUE_OPTIONAL, 'Input data')
-        ;
+            ->addOption('input', 'i', InputOption::VALUE_OPTIONAL, 'Input data');
     }
 
     /**

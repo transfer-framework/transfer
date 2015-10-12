@@ -57,8 +57,7 @@ class ProcedureBuilderTest extends \PHPUnit_Framework_TestCase
                     ->end()
                 ->end()
             ->end()
-            ->getProcedure()
-        ;
+            ->getProcedure();
 
         $this->assertTrue($procedure->procedureExists(
             array('first_level', 'second_level', 'third_level')

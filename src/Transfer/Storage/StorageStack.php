@@ -49,9 +49,9 @@ class StorageStack
      *
      * @param string $scope Scope name
      *
-     * @return StorageInterface Object
-     *
      * @throws ObjectNotFoundException
+     *
+     * @return StorageInterface Object
      */
     public function getScope($scope)
     {

@@ -9,8 +9,8 @@
 
 namespace Transfer\Event;
 
-use Transfer\Worker\WorkerInterface;
 use Symfony\Component\EventDispatcher\Event;
+use Transfer\Worker\WorkerInterface;
 
 /**
  * Event triggered before an object is passed through a worker.

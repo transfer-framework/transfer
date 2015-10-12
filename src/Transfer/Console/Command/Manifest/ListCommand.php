@@ -9,10 +9,10 @@
 
 namespace Transfer\Console\Command\Manifest;
 
-use Transfer\Manifest\ManifestInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Transfer\Manifest\ManifestInterface;
 
 /**
  * Command for listing manifests in manifest chain.
@@ -28,8 +28,7 @@ class ListCommand extends ManifestCommand
 
         $this
             ->setName('manifest:list')
-            ->setDescription('List registered manifests')
-        ;
+            ->setDescription('List registered manifests');
     }
 
     /**

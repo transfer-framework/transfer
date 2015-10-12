@@ -10,9 +10,9 @@
 namespace Transfer\Tests\Console\Command;
 
 use Prophecy\Argument;
-use Transfer\Console\Command\Manifest\RunCommand;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Transfer\Console\Command\Manifest\RunCommand;
 use Transfer\Processor\SequentialProcessor;
 
 class RunCommandTest extends \PHPUnit_Framework_TestCase
