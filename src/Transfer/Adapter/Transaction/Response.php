@@ -13,4 +13,5 @@ namespace Transfer\Adapter\Transaction;
  * Response model.
  */
 class Response extends Transaction
-{}
+{
+}
