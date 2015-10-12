@@ -81,15 +81,14 @@ class ProcedureBuilder
      */
     public function addInput($adapter, Request $request = null)
     {
-        if (is_callable($adapter)) {
-            $adapter = new CallbackAdapter($adapter, null);
-        }
-
         if ($request == null) {
             $request = new Request();
         }
 
-        $this->definitions[$this->context]['inputs'][] = array($adapter, $request);
+        $this->addDefinition(
+            'inputs',
+            array((is_callable($adapter) ? new CallbackAdapter($adapter, null) : $adapter), $request)
+        );
 
         return $this;
     }
@@ -103,11 +102,10 @@ class ProcedureBuilder
      */
     public function addOutput($adapter)
     {
-        if (is_callable($adapter)) {
-            $adapter = new CallbackAdapter(null, $adapter);
-        }
-
-        $this->definitions[$this->context]['outputs'][] = $adapter;
+        $this->addDefinition(
+            'outputs',
+            is_callable($adapter) ? new CallbackAdapter(null, $adapter) : $adapter
+        );
 
         return $this;
     }
@@ -121,11 +119,10 @@ class ProcedureBuilder
      */
     public function addWorker($worker)
     {
-        if (is_callable($worker)) {
-            $worker = new CallbackWorker($worker);
-        }
-
-        $this->definitions[$this->context]['workers'][] = $worker;
+        $this->addDefinition(
+            'workers',
+            is_callable($worker) ? new CallbackWorker($worker) : $worker
+        );
 
         return $this;
     }
@@ -144,5 +141,16 @@ class ProcedureBuilder
         $this->definitions[$this->context]['children'][] = $definition;
 
         return $this;
+    }
+
+    /**
+     * Adds definition.
+     *
+     * @param string $type
+     * @param object $component
+     */
+    private function addDefinition($type, $component)
+    {
+        $this->definitions[$this->context][$type][] = $component;
     }
 }
