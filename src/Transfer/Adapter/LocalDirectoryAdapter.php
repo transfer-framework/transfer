@@ -9,11 +9,11 @@
 
 namespace Transfer\Adapter;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Transfer\Adapter\Transaction\Iterator\CallbackIterator;
 use Transfer\Adapter\Transaction\Request;
 use Transfer\Adapter\Transaction\Response;
 use Transfer\Data\ValueObject;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Local directory adapter functioning as an input.

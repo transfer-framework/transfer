@@ -10,9 +10,9 @@
 namespace Transfer\Tests\Console\Command;
 
 use Prophecy\Argument;
+use Symfony\Component\Console\Tester\CommandTester;
 use Transfer\Console\Command\Manifest\DescribeCommand;
 use Transfer\Procedure\ProcedureBuilder;
-use Symfony\Component\Console\Tester\CommandTester;
 
 class DescribeCommandTest extends \PHPUnit_Framework_TestCase
 {
@@ -47,8 +47,7 @@ class DescribeCommandTest extends \PHPUnit_Framework_TestCase
                         ->addInput($input)
                         ->addWorker($worker)
                         ->addOutput($output)
-                    ->end()
-                ;
+                    ->end();
             }
         );
         $manifest = $manifestProphecy->reveal();

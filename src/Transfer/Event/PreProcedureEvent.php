@@ -9,8 +9,8 @@
 
 namespace Transfer\Event;
 
-use Transfer\Procedure\Procedure;
 use Symfony\Component\EventDispatcher\Event;
+use Transfer\Procedure\Procedure;
 
 /**
  * Event triggered before a procedure is started.

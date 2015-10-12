@@ -9,8 +9,8 @@
 
 namespace Transfer\Tests\Event;
 
-use Transfer\Event\PreWorkerEvent;
 use Transfer\Data\ValueObject;
+use Transfer\Event\PreWorkerEvent;
 use Transfer\Worker\WorkerInterface;
 
 class PreWorkerEventTest extends \PHPUnit_Framework_TestCase

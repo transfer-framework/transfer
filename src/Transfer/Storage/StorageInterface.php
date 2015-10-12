@@ -47,9 +47,9 @@ interface StorageInterface
      *
      * @param string $id ID
      *
-     * @return mixed Object
-     *
      * @throws Exception\ObjectNotFoundException
+     *
+     * @return mixed Object
      */
     public function findById($id);
 

@@ -12,7 +12,6 @@ namespace Transfer\Adapter;
 use Transfer\Adapter\Transaction\Request;
 use Transfer\Adapter\Transaction\Response;
 use Transfer\Data\ValueObject;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Local file adapter functioning as an input.

@@ -9,8 +9,8 @@
 
 namespace Transfer\Tests\Adapter;
 
-use Transfer\Adapter\Transaction\Request;
 use Transfer\Adapter\LocalFileAdapter;
+use Transfer\Adapter\Transaction\Request;
 
 class LocalFileAdapterTest extends \PHPUnit_Framework_TestCase
 {

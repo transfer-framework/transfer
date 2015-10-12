@@ -215,7 +215,7 @@ class Procedure
         $context = $this->normalizeContext($context);
 
         $methods = array(
-            'input' => 'getInputs',
+            'input'  => 'getInputs',
             'worker' => 'getWorkers',
             'output' => 'getOutputs',
         );

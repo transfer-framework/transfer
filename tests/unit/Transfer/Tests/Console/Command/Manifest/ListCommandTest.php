@@ -9,10 +9,10 @@
 
 namespace Transfer\Tests\Console\Command;
 
-use Transfer\Console\Command\Manifest\ListCommand;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Helper\TableHelper;
 use Symfony\Component\Console\Tester\CommandTester;
+use Transfer\Console\Command\Manifest\ListCommand;
 
 class ListCommandTest extends \PHPUnit_Framework_TestCase
 {

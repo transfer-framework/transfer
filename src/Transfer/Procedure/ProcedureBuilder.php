@@ -46,11 +46,11 @@ class ProcedureBuilder
     public function createProcedure($name)
     {
         $definition = array(
-            'parent' => $this->context,
-            'name' => $name,
-            'inputs' => array(),
-            'workers' => array(),
-            'outputs' => array(),
+            'parent'   => $this->context,
+            'name'     => $name,
+            'inputs'   => array(),
+            'workers'  => array(),
+            'outputs'  => array(),
             'children' => array(),
         );
 

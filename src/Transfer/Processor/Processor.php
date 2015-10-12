@@ -128,9 +128,9 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
      * @param InputAdapterInterface $adapter Input adapter
      * @param Request               $request Request to handle
      *
-     * @return Response Input adapter response
-     *
      * @throws MissingResponseException
+     *
+     * @return Response Input adapter response
      */
     protected function handleInput(InputAdapterInterface $adapter, Request $request)
     {
@@ -212,9 +212,9 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
      * @param OutputAdapterInterface $adapter Output adapter
      * @param Request                $request Request to handle
      *
-     * @return Response Output adapter response
-     *
      * @throws MissingResponseException
+     *
+     * @return Response Output adapter response
      */
     protected function handleOutput(OutputAdapterInterface $adapter, Request $request)
     {

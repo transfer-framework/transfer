@@ -9,9 +9,9 @@
 
 namespace Transfer\Event;
 
-use Transfer\Adapter\Transaction\Request;
-use Transfer\Adapter\OutputAdapterInterface;
 use Symfony\Component\EventDispatcher\Event;
+use Transfer\Adapter\OutputAdapterInterface;
+use Transfer\Adapter\Transaction\Request;
 
 /**
  * Event triggered before an output adapter receives a request.
