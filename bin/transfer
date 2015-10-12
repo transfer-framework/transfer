@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+/*
+ * This file is part of Transfer.
+ *
+ * For the full copyright and license information, please view the LICENSE file located
+ * in the root directory.
+ */
+
+use Transfer\Console\TransferApplication;
+
+require 'vendor/autoload.php';
+
+$application = new TransferApplication();
+$application->run();
