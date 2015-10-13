@@ -20,8 +20,8 @@ abstract class Transaction extends DataAggregate
     protected $headers;
 
     /**
-     * @param array|\Iterator $data    Data collection
-     * @param array           $headers Header collection
+     * @param array|\Iterator|\Traversable $data    Data collection
+     * @param array                        $headers Header collection
      */
     public function __construct($data = array(), $headers = array())
     {
