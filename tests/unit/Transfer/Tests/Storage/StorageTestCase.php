@@ -19,18 +19,29 @@ class StorageTestCase extends \PHPUnit_Framework_TestCase
     protected $storage;
 
     /**
-     * Tests get(), set() and has() methods.
+     * Tests basic operations.
      */
-    public function testGetSetHas()
+    public function testBasicOperations()
     {
-        $this->assertTrue($this->storage->add('value', 'key'));
-        $this->assertTrue($this->storage->containsId('key'));
-        $this->assertFalse($this->storage->containsId('non-existing-key'));
+        $this->assertTrue($this->storage->add('value', 'id'));
+        $this->assertTrue($this->storage->containsId('id'));
 
-        $this->assertEquals('value', $this->storage->findById('key'));
+        $this->assertEquals('value', $this->storage->findById('id'));
 
+        $this->storage->add('another-value');
+        $this->assertTrue($this->storage->contains('another-value'));
+
+        $this->assertTrue($this->storage->remove('another-value'));
+        $this->assertFalse($this->storage->contains('another-value'));
+    }
+
+    /**
+     * Tests storage search.
+     */
+    public function testFindByIdOnNonExistingId()
+    {
         $this->setExpectedException('Transfer\Storage\Exception\ObjectNotFoundException');
-        $this->assertNull($this->storage->findById('non-existing-key'));
+        $this->assertNull($this->storage->findById('non-existing-id'));
     }
 
     /**
@@ -38,10 +49,10 @@ class StorageTestCase extends \PHPUnit_Framework_TestCase
      */
     public function testAll()
     {
-        $this->assertTrue($this->storage->add('value', 'key'));
+        $this->assertTrue($this->storage->add('value', 'id'));
         $this->assertCount(1, $this->storage->all());
-        $this->assertTrue($this->storage->removeById('key'));
-        $this->assertFalse($this->storage->containsId('key'));
+        $this->assertTrue($this->storage->removeById('id'));
+        $this->assertFalse($this->storage->containsId('id'));
         $this->assertCount(0, $this->storage->all());
     }
 }

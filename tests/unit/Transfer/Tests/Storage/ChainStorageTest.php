@@ -41,8 +41,10 @@ class ChainStorageTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($storage->add('value', 'key'));
         $this->assertTrue($storage->containsId('key'));
+        $this->assertTrue($storage->contains('value'));
         $this->assertEquals('value', $storage->findById('key'));
-        $this->assertTrue($storage->remove('key'));
+        $this->assertTrue($storage->remove('value'));
+        $this->assertTrue($storage->removeById('key'));
     }
 
     /**
@@ -69,7 +71,9 @@ class ChainStorageTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($storage->add('value', 'key'));
         $this->assertFalse($storage->containsId('key'));
-        $this->assertFalse($storage->remove('key'));
+        $this->assertFalse($storage->contains('key'));
+        $this->assertFalse($storage->remove('value'));
+        $this->assertFalse($storage->removeById('key'));
 
         $this->setExpectedException('Transfer\Storage\Exception\ObjectNotFoundException');
         $this->assertEquals(null, $storage->findById('key'));
@@ -131,8 +135,14 @@ class ChainStorageTest extends \PHPUnit_Framework_TestCase
         $stub->method('containsId')
              ->willReturn(true);
 
+        $stub->method('contains')
+             ->willReturn(true);
+
         $stub->method('remove')
              ->willReturn(true);
+
+        $stub->method('removeById')
+            ->willReturn(true);
 
         return $stub;
     }
@@ -155,8 +165,14 @@ class ChainStorageTest extends \PHPUnit_Framework_TestCase
         $stub->method('containsId')
              ->willReturn(false);
 
+        $stub->method('contains')
+            ->willReturn(false);
+
         $stub->method('remove')
              ->willReturn(false);
+
+        $stub->method('removeById')
+            ->willReturn(false);
 
         $stub->method('all')
              ->willReturn(null);
