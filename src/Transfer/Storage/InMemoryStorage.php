@@ -26,7 +26,7 @@ class InMemoryStorage extends AbstractStorage
      */
     public function add($object, $id = null)
     {
-        if ($id == null) {
+        if ($id === null) {
             $id = $this->hashingStrategy->hash($object);
         }
 
