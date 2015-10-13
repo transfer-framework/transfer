@@ -20,7 +20,7 @@ class DataAggregate implements \IteratorAggregate
     protected $iterator;
 
     /**
-     * @param array|\Iterator $data Data array or iterator
+     * @param array|\Iterator|\Traversable $data Data array or iterator
      */
     public function __construct($data)
     {
