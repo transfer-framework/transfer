@@ -147,7 +147,7 @@ class ProcedureBuilder
      * Adds definition.
      *
      * @param string $type
-     * @param object $component
+     * @param mixed  $component
      */
     private function addDefinition($type, $component)
     {
