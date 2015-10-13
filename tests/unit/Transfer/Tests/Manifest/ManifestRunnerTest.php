@@ -10,6 +10,7 @@
 namespace Transfer\Tests\Manifest;
 
 use Prophecy\Argument;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Transfer\Event\TransferEvents;
 use Transfer\Manifest\ManifestInterface;
 use Transfer\Manifest\ManifestRunner;
@@ -44,6 +45,7 @@ class ManifestRunnerTest extends \PHPUnit_Framework_TestCase
         /** @var ManifestInterface $manifest */
         $manifest = $manifestProphecy->reveal();
 
+        $runner->setEventDispatcher(new EventDispatcher());
         $runner->run($manifest);
 
         $this->assertTrue($finished);

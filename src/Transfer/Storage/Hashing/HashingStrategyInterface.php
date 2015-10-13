@@ -17,7 +17,7 @@ interface HashingStrategyInterface
     /**
      * Generates a hash based on an object.
      *
-     * @param $object Object to generate hash for
+     * @param mixed $object Object to generate hash for
      *
      * @return string Hash
      */

@@ -10,68 +10,200 @@
 namespace Transfer\Tests\Processor;
 
 use Prophecy\Argument;
-use Psr\Log\NullLogger;
+use Psr\Log\LoggerInterface;
 use Transfer\Adapter\CallbackAdapter;
+use Transfer\Adapter\Transaction\Request;
 use Transfer\Adapter\Transaction\Response;
 use Transfer\Data\ValueObject;
 use Transfer\Event\PreAdapterSendEvent;
-use Transfer\Event\PreWorkerEvent;
 use Transfer\Event\TransferEvents;
-use Transfer\Procedure\ProcedureBuilder;
-use Transfer\Processor\EventDrivenProcessor;
-use Transfer\Processor\NonSequentialProcessor;
+use Transfer\Procedure\Procedure;
+use Transfer\Processor\Processor;
 use Transfer\Processor\SequentialProcessor;
-use Transfer\Storage\InMemoryStorage;
-use Transfer\Storage\StorageStack;
+use Transfer\Worker\CallbackWorker;
 
 class ProcessorTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Tests getName method.
+     * @var Processor
      */
-    public function testNonSequentialProcessorName()
-    {
-        $processor = new NonSequentialProcessor();
+    protected $processor;
 
-        $this->assertEquals('Non-sequential processor', $processor->getName());
+    protected function setUp()
+    {
+        $this->processor = $this->getMockForAbstractClass('Transfer\Processor\Processor');
+    }
+
+    public function testSetStorageStack()
+    {
+        $this->assertSame(
+            $this->processor,
+            $this->processor->setStorageStack($this->getMock('Transfer\Storage\StorageStack'))
+        );
+    }
+
+    public function testSetLogger()
+    {
+        $this->assertSame(
+            $this->processor,
+            $this->processor->setLogger($this->getMock('Psr\Log\LoggerInterface'))
+        );
     }
 
     /**
-     * Tests getName method.
+     * Process with invalid input adapter.
      */
-    public function testSequentialProcessorName()
+    public function testProcessWithInvalidInputAdapter()
+    {
+        $this->setExpectedException('Transfer\Exception\MissingResponseException');
+
+        $processor = new SequentialProcessor();
+
+        /** @var object $procedureProphecy */
+        $procedureProphecy = $this->prophesize('Transfer\Procedure\Procedure');
+        $procedureProphecy->hasChildren()->willReturn(false);
+
+        $procedureProphecy->getInputs()->willReturn(array(
+            array(
+                new CallbackAdapter(
+                    function () {
+                        return;
+                    }
+                ),
+                new Request(),
+            ),
+        ));
+
+        /** @var Procedure $procedure */
+        $procedure = $procedureProphecy->reveal();
+
+        $processor->addProcedure($procedure);
+        $processor->process();
+    }
+
+    /**
+     * Process with invalid output adapter.
+     */
+    public function testProcessWithInvalidOutputAdapter()
+    {
+        $this->setExpectedException('Transfer\Exception\MissingResponseException');
+
+        $processor = new SequentialProcessor();
+
+        /** @var object $procedureProphecy */
+        $procedureProphecy = $this->prophesize('Transfer\Procedure\Procedure');
+        $procedureProphecy->hasChildren()->willReturn(false);
+
+        $procedureProphecy->getInputs()->willReturn(array(
+            array(
+                new CallbackAdapter(
+                    function () {
+                        return new Response(array('a'));
+                    }
+                ),
+                new Request(),
+            ),
+        ));
+
+        $procedureProphecy->getWorkers()->willReturn(array());
+
+        $procedureProphecy->getOutputs()->willReturn(array(
+            new CallbackAdapter(
+                null,
+                function () {
+                    return;
+                }
+            ),
+        ));
+
+        /** @var Procedure $procedure */
+        $procedure = $procedureProphecy->reveal();
+
+        $processor->addProcedure($procedure);
+        $processor->process();
+    }
+
+    public function testObjectRemovalAndModificationInWorkerStage()
+    {
+        $actual = array();
+
+        $processor = new SequentialProcessor();
+
+        /** @var object $procedureProphecy */
+        $procedureProphecy = $this->prophesize('Transfer\Procedure\Procedure');
+        $procedureProphecy->hasChildren()->willReturn(false);
+
+        $procedureProphecy->getInputs()->willReturn(array(
+            array(
+                new CallbackAdapter(
+                    function () {
+                        return new Response(array('a', 'b', 'c'));
+                    }
+                ),
+                new Request(),
+            ),
+        ));
+
+        $procedureProphecy->getWorkers()->willReturn(array(
+            new CallbackWorker(function ($object) {
+                if ($object == 'a') {
+                    return;
+                }
+
+                if ($object == 'b') {
+                    return 'd';
+                }
+
+                return $object;
+            }),
+        ));
+
+        $procedureProphecy->getOutputs()->willReturn(array(
+            new CallbackAdapter(
+                null,
+                function () {
+                    return new Response();
+                }
+            ),
+        ));
+
+        $processor->addListener(TransferEvents::PRE_ADAPTER_SEND, function (PreAdapterSendEvent $event) use (&$actual) {
+            foreach ($event->getRequest()->getData() as $object) {
+                $actual[] = $object;
+            }
+        });
+
+        /** @var Procedure $procedure */
+        $procedure = $procedureProphecy->reveal();
+
+        $processor->addProcedure($procedure);
+        $processor->process();
+
+        $this->assertEquals(array('d', 'c'), $actual);
+    }
+
+    public function testDependencyInject()
     {
         $processor = new SequentialProcessor();
 
-        $this->assertEquals('Sequential processor', $processor->getName());
-    }
+        /** @var object $procedureProphecy */
+        $procedureProphecy = $this->prophesize('Transfer\Procedure\Procedure');
+        $procedureProphecy->hasChildren()->willReturn(false);
 
-    /**
-     * Tests sequential processor execution order.
-     */
-    public function testSequentialProcessorExecutionOrder()
-    {
-        $processor = new NonSequentialProcessor();
+        $procedureProphecy->getName()->willReturn('test');
 
-        $this->assertOrder($processor, array('a', 'b', 'c', 'a', 'b', 'c'));
-    }
+        $procedureProphecy->getInputs()->willReturn(array(
+            array(
+                new CallbackAdapter(
+                    function () {
+                        return new Response(array(new ValueObject('a')));
+                    }
+                ),
+                new Request(),
+            ),
+        ));
 
-    /**
-     * Tests non-sequential processor execution order.
-     */
-    public function testNonSequentialProcessorExecutionOrder()
-    {
-        $processor = new SequentialProcessor();
-
-        $this->assertOrder($processor, array('a', 'a', 'b', 'b', 'c', 'c'));
-    }
-
-    /**
-     * @param EventDrivenProcessor $processor
-     * @param array                $expected
-     */
-    private function assertOrder($processor, $expected)
-    {
+        /** @var object $workerProphecy */
         $workerProphecy = $this->prophesize('Transfer\Worker\WorkerInterface');
         $workerProphecy->willImplement('Transfer\Storage\StorageStackAwareInterface');
         $workerProphecy->willImplement('Psr\Log\LoggerAwareInterface');
@@ -82,98 +214,29 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
             return $args[0];
         });
 
-        $worker = $workerProphecy->reveal();
+        $procedureProphecy->getWorkers()->willReturn(array(
+            $workerProphecy->reveal(),
+        ));
 
-        $pb = new ProcedureBuilder();
-        $procedure = $pb
-            ->createProcedure('test-procedure')
-                ->addInput(new CallbackAdapter(
-                    function () {
-                        return new Response(new \ArrayIterator(array(
-                            new ValueObject('a'),
-                            new ValueObject('b'),
-                            new ValueObject('c'),
-                        )));
-                    },
-                    function () {}
-                ))
-                ->addWorker($worker)
-                ->addOutput(new CallbackAdapter(function () {}, function () { return new Response(); }))
-            ->end()
-            ->getProcedure();
+        $procedureProphecy->getOutputs()->willReturn(array(
+            new CallbackAdapter(
+                null,
+                function () {
+                    return new Response();
+                }
+            ),
+        ));
 
-        $processor->addListener(TransferEvents::PRE_WORKER, function (PreWorkerEvent $event) use (&$actual) {
-            $actual[] = $event->getObject()->data;
-        });
-
-        $processor->addListener(TransferEvents::PRE_ADAPTER_SEND, function (PreAdapterSendEvent $event) use (&$actual) {
-            foreach ($event->getRequest()->getData() as $object) {
-                $actual[] = $object->data;
-            }
-        });
-
-        $processor->setStorageStack(new StorageStack(array('global' => new InMemoryStorage())));
-        $processor->setLogger(new NullLogger());
-
-        $processor->addProcedure($procedure);
-        $processor->process();
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     * Process with invalid input adapter.
-     */
-    public function testProcessWithInvalidInputAdapter()
-    {
-        $processor = new SequentialProcessor();
-
-        $pb = new ProcedureBuilder();
-
-        $procedure = $pb
-            ->createProcedure('test-procedure')
-                ->addInput(new CallbackAdapter(function () {}, function () {}))
-            ->end()
-            ->getProcedure();
-
+        /** @var Procedure $procedure */
+        $procedure = $procedureProphecy->reveal();
         $processor->addProcedure($procedure);
 
-        $this->setExpectedException('Transfer\Exception\MissingResponseException');
+        $loggerProphecy = $this->prophesize('Psr\Log\LoggerInterface');
+        $loggerProphecy->info(Argument::type('string'))->shouldBeCalled();
 
-        $processor->process();
-    }
-
-    /**
-     * Process with invalid output adapter.
-     */
-    public function testProcessWithInvalidOutputAdapter()
-    {
-        $processor = new SequentialProcessor();
-
-        $pb = new ProcedureBuilder();
-
-        $procedure = $pb
-            ->createProcedure('test-procedure')
-                ->addInput(new CallbackAdapter(
-                    function () {
-                        $response = new Response();
-                        $response->setData(new \ArrayIterator(array(
-                            new ValueObject(null),
-                        )));
-
-                        return $response;
-                    },
-                    function () {
-                        return new Response();
-                    }
-                ))
-                ->addOutput(new CallbackAdapter(function () {}, function () {}))
-            ->end()
-            ->getProcedure();
-
-        $processor->addProcedure($procedure);
-
-        $this->setExpectedException('Transfer\Exception\MissingResponseException');
+        /** @var LoggerInterface $logger */
+        $logger = $loggerProphecy->reveal();
+        $processor->setLogger($logger);
 
         $processor->process();
     }

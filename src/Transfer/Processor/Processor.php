@@ -31,7 +31,7 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
     /**
      * @var array Procedures
      */
-    protected $procedures;
+    protected $procedures = array();
 
     /**
      * @var StorageStack Storage stack
