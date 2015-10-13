@@ -42,7 +42,7 @@ class DataAggregate implements \IteratorAggregate
     /**
      * Assigns data to the aggregate.
      *
-     * @param array|\Iterator $object
+     * @param array|\Iterator|\Traversable $object
      */
     public function setData($object)
     {
