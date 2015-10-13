@@ -9,16 +9,12 @@
 
 namespace Transfer\Tests\Storage\Hashing;
 
-use Transfer\Storage\ChainStorage;
-use Transfer\Storage\Exception\ObjectNotFoundException;
 use Transfer\Storage\Hashing\StandardHashingStrategy;
-use Transfer\Storage\InMemoryStorage;
-use Transfer\Storage\StorageInterface;
 
 class StandardHashingStrategyTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Tests hashing
+     * Tests hashing.
      */
     public function testHash()
     {
@@ -29,7 +25,7 @@ class StandardHashingStrategyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests hashing on unsupported type
+     * Tests hashing on unsupported type.
      */
     public function testHashOnUnsupportedType()
     {
