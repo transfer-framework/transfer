@@ -38,16 +38,16 @@ class Logger implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            TransferEvents::PRE_PROCESS          => array('logPreProcessEvent', 0),
-            TransferEvents::POST_PROCESS         => array('logPostProcessEvent', 0),
-            TransferEvents::PRE_PROCEDURE        => array('logPreProcedureEvent', 0),
-            TransferEvents::POST_PROCEDURE       => array('logPostProcedureEvent', 0),
-            TransferEvents::PRE_ADAPTER_RECEIVE  => array('logPreAdapterReceiveEvent', 0),
+            TransferEvents::PRE_PROCESS => array('logPreProcessEvent', 0),
+            TransferEvents::POST_PROCESS => array('logPostProcessEvent', 0),
+            TransferEvents::PRE_PROCEDURE => array('logPreProcedureEvent', 0),
+            TransferEvents::POST_PROCEDURE => array('logPostProcedureEvent', 0),
+            TransferEvents::PRE_ADAPTER_RECEIVE => array('logPreAdapterReceiveEvent', 0),
             TransferEvents::POST_ADAPTER_RECEIVE => array('logPostAdapterReceiveEvent', 0),
-            TransferEvents::PRE_WORKER           => array('logPreWorkerEvent', 0),
-            TransferEvents::POST_WORKER          => array('logPostWorkerEvent', 0),
-            TransferEvents::PRE_ADAPTER_SEND     => array('logPreAdapterSendEvent', 0),
-            TransferEvents::POST_ADAPTER_SEND    => array('logPostAdapterSendEvent', 0),
+            TransferEvents::PRE_WORKER => array('logPreWorkerEvent', 0),
+            TransferEvents::POST_WORKER => array('logPostWorkerEvent', 0),
+            TransferEvents::PRE_ADAPTER_SEND => array('logPreAdapterSendEvent', 0),
+            TransferEvents::POST_ADAPTER_SEND => array('logPostAdapterSendEvent', 0),
         );
     }
 
