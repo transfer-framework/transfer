@@ -220,7 +220,7 @@ class Procedure
             'output' => 'getOutputs',
         );
 
-        if (!array_key_exists($type, $methods) || $context->getParent() == null) {
+        if (!array_key_exists($type, $methods) || $context->getParent() === null) {
             return array();
         }
 
@@ -260,7 +260,7 @@ class Procedure
      */
     private function normalizeContext($context = null)
     {
-        if ($context == null) {
+        if ($context === null) {
             $context = $this;
         }
 

@@ -51,7 +51,7 @@ abstract class ManifestCommand extends Command
     {
         $file = $input->getOption('chain');
 
-        if ($file != null) {
+        if ($file !== null) {
             if (!file_exists($file)) {
                 throw new \InvalidArgumentException(sprintf('File "%s" could not be located.', $file));
             }
@@ -60,7 +60,7 @@ abstract class ManifestCommand extends Command
             $this->chain = require $file;
         }
 
-        if ($this->chain == null) {
+        if ($this->chain === null) {
             throw new MissingManifestChainException();
         }
     }

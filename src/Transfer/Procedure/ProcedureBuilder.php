@@ -81,7 +81,7 @@ class ProcedureBuilder
      */
     public function addInput($adapter, Request $request = null)
     {
-        if ($request == null) {
+        if ($request === null) {
             $request = new Request();
         }
 

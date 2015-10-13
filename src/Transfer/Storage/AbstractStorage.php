@@ -29,7 +29,7 @@ abstract class AbstractStorage implements StorageInterface
     {
         $this->hashingStrategy = $hashingStrategy;
 
-        if ($this->hashingStrategy == null) {
+        if ($this->hashingStrategy === null) {
             $this->hashingStrategy = new StandardHashingStrategy();
         }
     }
