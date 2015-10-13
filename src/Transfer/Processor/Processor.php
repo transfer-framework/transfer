@@ -138,7 +138,7 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
 
         $response = $adapter->receive($request);
 
-        if ($response == null) {
+        if ($response === null) {
             throw new MissingResponseException($adapter);
         }
 
@@ -184,7 +184,7 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
 
         $modifiedObject = $worker->handle($object);
 
-        if ($modifiedObject == null) {
+        if ($modifiedObject === null) {
             $storage->remove($object);
         } elseif ($modifiedObject !== $object) {
             $storage->remove($object);
@@ -222,7 +222,7 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
 
         $response = $adapter->send($request);
 
-        if ($response == null) {
+        if ($response === null) {
             throw new MissingResponseException($adapter);
         }
 
