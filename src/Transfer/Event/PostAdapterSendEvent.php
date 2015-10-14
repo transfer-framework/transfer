@@ -10,17 +10,17 @@
 namespace Transfer\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use Transfer\Adapter\OutputAdapterInterface;
+use Transfer\Adapter\TargetAdapterInterface;
 use Transfer\Adapter\Transaction\Request;
 use Transfer\Adapter\Transaction\Response;
 
 /**
- * Event triggered after an output adapter returns a response.
+ * Event triggered after a target adapter returns a response.
  */
 class PostAdapterSendEvent extends Event
 {
     /**
-     * @var OutputAdapterInterface Output adapter
+     * @var TargetAdapterInterface Target adapter
      */
     protected $adapter;
 
@@ -40,12 +40,12 @@ class PostAdapterSendEvent extends Event
     protected $elapsedTime;
 
     /**
-     * @param OutputAdapterInterface $adapter     Output adapter
+     * @param TargetAdapterInterface $adapter     Target adapter
      * @param Request                $request     Request sent to adapter
      * @param Response               $response    Response returned by adapter
      * @param float                  $elapsedTime Elapsed time
      */
-    public function __construct(OutputAdapterInterface $adapter, Request $request, Response $response, $elapsedTime = 0.0)
+    public function __construct(TargetAdapterInterface $adapter, Request $request, Response $response, $elapsedTime = 0.0)
     {
         $this->adapter = $adapter;
         $this->request = $request;
@@ -54,11 +54,11 @@ class PostAdapterSendEvent extends Event
     }
 
     /**
-     * Returns output adapter.
+     * Returns target adapter.
      *
-     * @return OutputAdapterInterface Output adapter
+     * @return TargetAdapterInterface Target adapter
      */
-    public function getOutputAdapter()
+    public function getTargetAdapter()
     {
         return $this->adapter;
     }

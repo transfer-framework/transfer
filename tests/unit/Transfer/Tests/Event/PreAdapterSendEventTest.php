@@ -9,7 +9,7 @@
 
 namespace Transfer\Tests\Event;
 
-use Transfer\Adapter\OutputAdapterInterface;
+use Transfer\Adapter\TargetAdapterInterface;
 use Transfer\Adapter\Transaction\Request;
 use Transfer\Event\PreAdapterSendEvent;
 
@@ -20,15 +20,15 @@ class PreAdapterSendEventTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstruct()
     {
-        /** @var OutputAdapterInterface $adapter */
-        $adapter = $this->getMockBuilder('Transfer\Adapter\OutputAdapterInterface')->getMock();
+        /** @var TargetAdapterInterface $adapter */
+        $adapter = $this->getMockBuilder('Transfer\Adapter\TargetAdapterInterface')->getMock();
 
         /** @var Request $request */
         $request = $this->getMockBuilder('Transfer\Adapter\Transaction\Request')->getMock();
 
         $event = new PreAdapterSendEvent($adapter, $request);
 
-        $this->assertSame($adapter, $event->getOutput());
+        $this->assertSame($adapter, $event->getTarget());
         $this->assertSame($request, $event->getRequest());
     }
 }

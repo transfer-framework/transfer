@@ -10,18 +10,18 @@
 namespace Transfer\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use Transfer\Adapter\InputAdapterInterface;
+use Transfer\Adapter\SourceAdapterInterface;
 use Transfer\Adapter\Transaction\Request;
 
 /**
- * Event triggered before an input adapter receives a request.
+ * Event triggered before a source adapter receives a request.
  */
 class PreAdapterReceiveEvent extends Event
 {
     /**
-     * @var InputAdapterInterface Input adapter
+     * @var SourceAdapterInterface Source adapter
      */
-    protected $input;
+    protected $source;
 
     /**
      * @var Request Request sent to adapter
@@ -29,23 +29,23 @@ class PreAdapterReceiveEvent extends Event
     protected $request;
 
     /**
-     * @param InputAdapterInterface $input   Input adapter
-     * @param Request               $request Request sent to adapter
+     * @param SourceAdapterInterface $source  Source adapter
+     * @param Request                $request Request sent to adapter
      */
-    public function __construct(InputAdapterInterface $input, Request $request = null)
+    public function __construct(SourceAdapterInterface $source, Request $request = null)
     {
-        $this->input = $input;
+        $this->source = $source;
         $this->request = $request;
     }
 
     /**
-     * Returns input adapter.
+     * Returns source adapter.
      *
-     * @return InputAdapterInterface Input adapter
+     * @return SourceAdapterInterface Source adapter
      */
-    public function getInput()
+    public function getSource()
     {
-        return $this->input;
+        return $this->source;
     }
 
     /**

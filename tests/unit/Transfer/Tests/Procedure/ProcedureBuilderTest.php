@@ -69,34 +69,34 @@ class ProcedureBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests insertion of callable components (inputs, workers and outputs).
+     * Tests insertion of callable components (sources, workers and targets).
      */
     public function testAddCallableComponent()
     {
         $pb = new ProcedureBuilder();
 
-        $pb->addInput(function (Request $request) {
+        $pb->addSource(function (Request $request) {
             return new Response();
         });
 
         $pb->addWorker(function (ObjectInterface $object) {});
 
-        $pb->addOutput(function (Request $request) {
+        $pb->addTarget(function (Request $request) {
             return new Response();
         });
 
         $procedure = $pb->getProcedure();
-        $inputs = $procedure->getInputs();
+        $sources = $procedure->getSources();
         $workers = $procedure->getWorkers();
-        $outputs = $procedure->getOutputs();
+        $targets = $procedure->getTargets();
 
-        $this->assertCount(1, $inputs);
-        $this->assertInstanceOf('Transfer\Adapter\CallbackAdapter', $inputs[0][0]);
+        $this->assertCount(1, $sources);
+        $this->assertInstanceOf('Transfer\Adapter\CallbackAdapter', $sources[0][0]);
 
         $this->assertCount(1, $workers);
         $this->assertInstanceOf('Transfer\Worker\WorkerInterface', $workers[0]);
 
-        $this->assertCount(1, $outputs);
-        $this->assertInstanceOf('Transfer\Adapter\CallbackAdapter', $outputs[0]);
+        $this->assertCount(1, $targets);
+        $this->assertInstanceOf('Transfer\Adapter\CallbackAdapter', $targets[0]);
     }
 }

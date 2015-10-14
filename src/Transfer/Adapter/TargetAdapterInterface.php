@@ -13,9 +13,9 @@ use Transfer\Adapter\Transaction\Request;
 use Transfer\Adapter\Transaction\Response;
 
 /**
- * Input directed adapter interface.
+ * Target adapter interface.
  */
-interface InputAdapterInterface
+interface TargetAdapterInterface
 {
     /**
      * Returns a response based on request.
@@ -24,5 +24,5 @@ interface InputAdapterInterface
      *
      * @return Response
      */
-    public function receive(Request $request);
+    public function send(Request $request);
 }

@@ -9,7 +9,7 @@
 
 namespace Transfer\Tests\Event;
 
-use Transfer\Adapter\OutputAdapterInterface;
+use Transfer\Adapter\TargetAdapterInterface;
 use Transfer\Adapter\Transaction\Request;
 use Transfer\Adapter\Transaction\Response;
 use Transfer\Event\PostAdapterSendEvent;
@@ -21,8 +21,8 @@ class PostAdapterSendEventTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstruct()
     {
-        /** @var OutputAdapterInterface $adapter */
-        $adapter = $this->getMockBuilder('Transfer\Adapter\OutputAdapterInterface')->getMock();
+        /** @var TargetAdapterInterface $adapter */
+        $adapter = $this->getMockBuilder('Transfer\Adapter\TargetAdapterInterface')->getMock();
 
         /** @var Request $request */
         $request = $this->getMockBuilder('Transfer\Adapter\Transaction\Request')->getMock();
@@ -32,7 +32,7 @@ class PostAdapterSendEventTest extends \PHPUnit_Framework_TestCase
 
         $event = new PostAdapterSendEvent($adapter, $request, $response, 10);
 
-        $this->assertSame($adapter, $event->getOutputAdapter());
+        $this->assertSame($adapter, $event->getTargetAdapter());
         $this->assertSame($request, $event->getRequest());
         $this->assertSame($response, $event->getResponse());
         $this->assertEquals(10, $event->getElapsedTime());

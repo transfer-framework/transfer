@@ -9,8 +9,8 @@
 
 namespace Transfer\Exception;
 
-use Transfer\Adapter\InputAdapterInterface;
-use Transfer\Adapter\OutputAdapterInterface;
+use Transfer\Adapter\SourceAdapterInterface;
+use Transfer\Adapter\TargetAdapterInterface;
 
 /**
  * Exception class for cases when a response is missing.
@@ -18,7 +18,7 @@ use Transfer\Adapter\OutputAdapterInterface;
 class MissingResponseException extends \Exception
 {
     /**
-     * @param InputAdapterInterface|OutputAdapterInterface $adapter Adapter object
+     * @param SourceAdapterInterface|TargetAdapterInterface $adapter Adapter object
      */
     public function __construct($adapter)
     {

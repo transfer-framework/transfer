@@ -12,9 +12,9 @@ namespace Transfer\Adapter;
 use Transfer\Adapter\Transaction\Request;
 
 /**
- * Input and output adapter implementation with callback support.
+ * Source and target adapter implementation with callback support.
  */
-class CallbackAdapter implements InputAdapterInterface, OutputAdapterInterface
+class CallbackAdapter implements SourceAdapterInterface, TargetAdapterInterface
 {
     /**
      * @var callback Receive callback

@@ -51,7 +51,7 @@ class SequentialProcessorTest extends \PHPUnit_Framework_TestCase
         $procedureProphecy->hasChildren()->willReturn(true);
         $procedureProphecy->getChildren()->willReturn(array());
 
-        $procedureProphecy->getInputs()->willReturn(array(
+        $procedureProphecy->getSources()->willReturn(array(
             array(
                 new CallbackAdapter(
                     function () {
@@ -68,7 +68,7 @@ class SequentialProcessorTest extends \PHPUnit_Framework_TestCase
             }),
         ));
 
-        $procedureProphecy->getOutputs()->willReturn(array(
+        $procedureProphecy->getTargets()->willReturn(array(
            new CallbackAdapter(
                null,
                function () {

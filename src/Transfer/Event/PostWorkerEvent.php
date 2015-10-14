@@ -13,7 +13,7 @@ use Symfony\Component\EventDispatcher\Event;
 use Transfer\Worker\WorkerInterface;
 
 /**
- * Event triggered after an object is passed through a worker.
+ * Event triggered after a object is passed through a worker.
  */
 class PostWorkerEvent extends Event
 {

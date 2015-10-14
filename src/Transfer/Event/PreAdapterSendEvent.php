@@ -10,18 +10,18 @@
 namespace Transfer\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use Transfer\Adapter\OutputAdapterInterface;
+use Transfer\Adapter\TargetAdapterInterface;
 use Transfer\Adapter\Transaction\Request;
 
 /**
- * Event triggered before an output adapter receives a request.
+ * Event triggered before a target adapter receives a request.
  */
 class PreAdapterSendEvent extends Event
 {
     /**
-     * @var OutputAdapterInterface Output adapter
+     * @var TargetAdapterInterface Target adapter
      */
-    protected $output;
+    protected $target;
 
     /**
      * @var Request Request sent to adapter
@@ -29,23 +29,23 @@ class PreAdapterSendEvent extends Event
     protected $request;
 
     /**
-     * @param OutputAdapterInterface $output  Output adapter
+     * @param TargetAdapterInterface $target  Target adapter
      * @param Request                $request Request sent to adapter
      */
-    public function __construct(OutputAdapterInterface $output, Request $request)
+    public function __construct(TargetAdapterInterface $target, Request $request)
     {
-        $this->output = $output;
+        $this->target = $target;
         $this->request = $request;
     }
 
     /**
-     * Returns output adapter.
+     * Returns target adapter.
      *
-     * @return OutputAdapterInterface Output adapter
+     * @return TargetAdapterInterface Target adapter
      */
-    public function getOutput()
+    public function getTarget()
     {
-        return $this->output;
+        return $this->target;
     }
 
     /**

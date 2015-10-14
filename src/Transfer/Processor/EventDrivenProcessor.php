@@ -13,8 +13,8 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Transfer\Adapter\InputAdapterInterface;
-use Transfer\Adapter\OutputAdapterInterface;
+use Transfer\Adapter\SourceAdapterInterface;
+use Transfer\Adapter\TargetAdapterInterface;
 use Transfer\Adapter\Transaction\Request;
 use Transfer\Event as Events;
 use Transfer\Event\TransferEvents;
@@ -101,11 +101,11 @@ abstract class EventDrivenProcessor extends Processor
     /**
      * {@inheritdoc}
      */
-    protected function handleInput(InputAdapterInterface $adapter, Request $request)
+    protected function handleSource(SourceAdapterInterface $adapter, Request $request)
     {
         $this->dispatcher->dispatch(TransferEvents::PRE_ADAPTER_RECEIVE, new Events\PreAdapterReceiveEvent($adapter, $request));
 
-        $response = parent::handleInput($adapter, $request);
+        $response = parent::handleSource($adapter, $request);
 
         $this->dispatcher->dispatch(
             TransferEvents::POST_ADAPTER_RECEIVE,
@@ -130,11 +130,11 @@ abstract class EventDrivenProcessor extends Processor
     /**
      * {@inheritdoc}
      */
-    protected function handleOutput(OutputAdapterInterface $adapter, Request $request)
+    protected function handleTarget(TargetAdapterInterface $adapter, Request $request)
     {
         $this->dispatcher->dispatch(TransferEvents::PRE_ADAPTER_SEND, new Events\PreAdapterSendEvent($adapter, $request));
 
-        $response = parent::handleOutput($adapter, $request);
+        $response = parent::handleTarget($adapter, $request);
 
         $this->dispatcher->dispatch(TransferEvents::POST_ADAPTER_SEND, new Events\PostAdapterSendEvent(
             $adapter, $request, $response, 0.0
