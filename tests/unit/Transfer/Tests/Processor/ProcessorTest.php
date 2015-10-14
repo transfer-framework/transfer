@@ -51,9 +51,9 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Process with invalid input adapter.
+     * Process with invalid source adapter.
      */
-    public function testProcessWithInvalidInputAdapter()
+    public function testProcessWithInvalidSourceAdapter()
     {
         $this->setExpectedException('Transfer\Exception\MissingResponseException');
 
@@ -63,7 +63,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $procedureProphecy = $this->prophesize('Transfer\Procedure\Procedure');
         $procedureProphecy->hasChildren()->willReturn(false);
 
-        $procedureProphecy->getInputs()->willReturn(array(
+        $procedureProphecy->getSources()->willReturn(array(
             array(
                 new CallbackAdapter(
                     function () {
@@ -82,9 +82,9 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Process with invalid output adapter.
+     * Process with invalid target adapter.
      */
-    public function testProcessWithInvalidOutputAdapter()
+    public function testProcessWithInvalidTargetAdapter()
     {
         $this->setExpectedException('Transfer\Exception\MissingResponseException');
 
@@ -94,7 +94,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $procedureProphecy = $this->prophesize('Transfer\Procedure\Procedure');
         $procedureProphecy->hasChildren()->willReturn(false);
 
-        $procedureProphecy->getInputs()->willReturn(array(
+        $procedureProphecy->getSources()->willReturn(array(
             array(
                 new CallbackAdapter(
                     function () {
@@ -107,7 +107,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
 
         $procedureProphecy->getWorkers()->willReturn(array());
 
-        $procedureProphecy->getOutputs()->willReturn(array(
+        $procedureProphecy->getTargets()->willReturn(array(
             new CallbackAdapter(
                 null,
                 function () {
@@ -133,7 +133,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $procedureProphecy = $this->prophesize('Transfer\Procedure\Procedure');
         $procedureProphecy->hasChildren()->willReturn(false);
 
-        $procedureProphecy->getInputs()->willReturn(array(
+        $procedureProphecy->getSources()->willReturn(array(
             array(
                 new CallbackAdapter(
                     function () {
@@ -158,7 +158,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
             }),
         ));
 
-        $procedureProphecy->getOutputs()->willReturn(array(
+        $procedureProphecy->getTargets()->willReturn(array(
             new CallbackAdapter(
                 null,
                 function () {
@@ -182,7 +182,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('d', 'c'), $actual);
     }
 
-    public function testDependencyInject()
+    public function testDependencyInjection()
     {
         $processor = new SequentialProcessor();
 
@@ -192,7 +192,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
 
         $procedureProphecy->getName()->willReturn('test');
 
-        $procedureProphecy->getInputs()->willReturn(array(
+        $procedureProphecy->getSources()->willReturn(array(
             array(
                 new CallbackAdapter(
                     function () {
@@ -218,7 +218,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
             $workerProphecy->reveal(),
         ));
 
-        $procedureProphecy->getOutputs()->willReturn(array(
+        $procedureProphecy->getTargets()->willReturn(array(
             new CallbackAdapter(
                 null,
                 function () {

@@ -30,7 +30,7 @@ class NonSequentialProcessor extends EventDrivenProcessor
      */
     protected function handleProcedure(Procedure $procedure)
     {
-        $response = $this->handleInputs($procedure->getInputs());
+        $response = $this->handleSources($procedure->getSources());
 
         while ($object = $this->nextObject($response)) {
             $this->stack->getScope('global')->add($object);
@@ -38,6 +38,6 @@ class NonSequentialProcessor extends EventDrivenProcessor
             $this->handleWorkers($procedure->getWorkers(), $object, $this->stack->getScope('global'));
         }
 
-        $this->handleOutputs($procedure->getOutputs(), new Request($this->stack->getScope('global')->all()));
+        $this->handleTargets($procedure->getTargets(), new Request($this->stack->getScope('global')->all()));
     }
 }

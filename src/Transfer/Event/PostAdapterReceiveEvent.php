@@ -10,16 +10,16 @@
 namespace Transfer\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use Transfer\Adapter\InputAdapterInterface;
+use Transfer\Adapter\SourceAdapterInterface;
 use Transfer\Adapter\Transaction\Response;
 
 /**
- * Event triggered after an input adapter returns a response.
+ * Event triggered after a source adapter returns a response.
  */
 class PostAdapterReceiveEvent extends Event
 {
     /**
-     * @var InputAdapterInterface Input adapter
+     * @var SourceAdapterInterface Source adapter
      */
     protected $adapter;
 
@@ -34,11 +34,11 @@ class PostAdapterReceiveEvent extends Event
     protected $elapsedTime;
 
     /**
-     * @param InputAdapterInterface $adapter     Input adapter
-     * @param Response              $response    Response returned by adapter
-     * @param float                 $elapsedTime Elapsed time
+     * @param SourceAdapterInterface $adapter     Source adapter
+     * @param Response               $response    Response returned by adapter
+     * @param float                  $elapsedTime Elapsed time
      */
-    public function __construct(InputAdapterInterface $adapter, Response $response, $elapsedTime = 0.0)
+    public function __construct(SourceAdapterInterface $adapter, Response $response, $elapsedTime = 0.0)
     {
         $this->adapter = $adapter;
         $this->response = $response;
@@ -46,11 +46,11 @@ class PostAdapterReceiveEvent extends Event
     }
 
     /**
-     * Returns input adapter.
+     * Returns source adapter.
      *
-     * @return InputAdapterInterface Input adapter
+     * @return SourceAdapterInterface Source adapter
      */
-    public function getInputAdapter()
+    public function getSourceAdapter()
     {
         return $this->adapter;
     }

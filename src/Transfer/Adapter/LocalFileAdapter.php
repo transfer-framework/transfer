@@ -14,9 +14,9 @@ use Transfer\Adapter\Transaction\Response;
 use Transfer\Data\ValueObject;
 
 /**
- * Local file adapter functioning as an input.
+ * Local file adapter functioning as a source.
  */
-class LocalFileAdapter implements InputAdapterInterface
+class LocalFileAdapter implements SourceAdapterInterface
 {
     /**
      * @var string Filename

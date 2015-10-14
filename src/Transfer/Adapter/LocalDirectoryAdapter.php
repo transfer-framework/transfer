@@ -16,9 +16,9 @@ use Transfer\Adapter\Transaction\Response;
 use Transfer\Data\ValueObject;
 
 /**
- * Local directory adapter functioning as an input.
+ * Local directory adapter functioning as a source.
  */
-class LocalDirectoryAdapter implements InputAdapterInterface
+class LocalDirectoryAdapter implements SourceAdapterInterface
 {
     /**
      * @var array Option collection

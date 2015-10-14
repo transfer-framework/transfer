@@ -106,9 +106,9 @@ class Logger implements EventSubscriberInterface
      */
     public function logPostAdapterReceiveEvent(Events\PostAdapterReceiveEvent $event)
     {
-        $input = $event->getInputAdapter();
+        $source = $event->getSourceAdapter();
 
-        $this->logger->info(sprintf('Received data from adapter "%s"', get_class($input)));
+        $this->logger->info(sprintf('Received data from adapter "%s"', get_class($source)));
     }
 
     /**
@@ -146,8 +146,8 @@ class Logger implements EventSubscriberInterface
      */
     public function logPostAdapterSendEvent(Events\PostAdapterSendEvent $event)
     {
-        $output = $event->getOutputAdapter();
+        $target = $event->getTargetAdapter();
 
-        $this->logger->info(sprintf('Objects sent to adapter "%s"', get_class($output)));
+        $this->logger->info(sprintf('Objects sent to adapter "%s"', get_class($target)));
     }
 }

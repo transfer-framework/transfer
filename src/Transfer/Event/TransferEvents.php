@@ -25,12 +25,12 @@ class TransferEvents
     const POST_PROCEDURE = 'transfer.post_procedure';
 
     /**
-     * Event triggered before an input adapter receives a request.
+     * Event triggered before a source adapter receives a request.
      */
     const PRE_ADAPTER_RECEIVE = 'transfer.pre_adapter_receive';
 
     /**
-     * Event triggered after an input adapter returns a response.
+     * Event triggered after a source adapter returns a response.
      */
     const POST_ADAPTER_RECEIVE = 'transfer.post_adapter_receive';
 
@@ -45,12 +45,12 @@ class TransferEvents
     const POST_WORKER = 'transfer.post_worker';
 
     /**
-     * Event triggered before an output adapter receives a request.
+     * Event triggered before a target adapter receives a request.
      */
     const PRE_ADAPTER_SEND = 'transfer.pre_adapter_send';
 
     /**
-     * Event triggered after an output adapter returns a response.
+     * Event triggered after a target adapter returns a response.
      */
     const POST_ADAPTER_SEND = 'transfer.post_adapter_send';
 

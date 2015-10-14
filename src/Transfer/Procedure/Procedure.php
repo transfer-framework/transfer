@@ -30,9 +30,9 @@ class Procedure
     protected $name;
 
     /**
-     * @var array Input collection
+     * @var array Source collection
      */
-    protected $inputs = array();
+    protected $sources = array();
 
     /**
      * @var array Worker collection
@@ -40,23 +40,23 @@ class Procedure
     protected $workers = array();
 
     /**
-     * @var array Output collection
+     * @var array Target collection
      */
-    protected $outputs = array();
+    protected $targets = array();
 
     /**
      * @param string    $name    Procedure name
-     * @param array     $inputs  Input collection
+     * @param array     $sources Source collection
      * @param array     $workers Worker collection
-     * @param array     $outputs Output collection
+     * @param array     $targets Target collection
      * @param Procedure $parent  Parent procedure
      */
-    public function __construct($name = null, $inputs = array(), $workers = array(), $outputs = array(), Procedure $parent = null)
+    public function __construct($name = null, $sources = array(), $workers = array(), $targets = array(), Procedure $parent = null)
     {
         $this->name = $name;
-        $this->inputs = $inputs;
+        $this->sources = $sources;
         $this->workers = $workers;
-        $this->outputs = $outputs;
+        $this->targets = $targets;
         $this->parent = $parent;
     }
 
@@ -65,9 +65,9 @@ class Procedure
      *
      * Procedure definition must be an array consisting of following elements:
      *   * name : string
-     *   * inputs : array of input adapters
+     *   * sources : array of source adapters
      *   * workers : array of workers
-     *   * outputs : array of output adapters
+     *   * targets : array of target adapters
      *
      * @param array     $definition Procedure definition (how a procedure should be built)
      * @param Procedure $parent     Parent procedure
@@ -78,9 +78,9 @@ class Procedure
     {
         $procedure = new self(
             $definition['name'],
-            $definition['inputs'],
+            $definition['sources'],
             $definition['workers'],
-            $definition['outputs'],
+            $definition['targets'],
             $parent
         );
 
@@ -171,13 +171,13 @@ class Procedure
     }
 
     /**
-     * Returns input collection.
+     * Returns source collection.
      *
-     * @return array Input collection
+     * @return array Source collection
      */
-    public function getInputs()
+    public function getSources()
     {
-        return array_merge($this->inputs, $this->getParentSettings('input'));
+        return array_merge($this->sources, $this->getParentSettings('input'));
     }
 
     /**
@@ -191,19 +191,19 @@ class Procedure
     }
 
     /**
-     * Returns output collection.
+     * Returns target collection.
      *
-     * @return array Output collection
+     * @return array Target collection
      */
-    public function getOutputs()
+    public function getTargets()
     {
-        return array_merge($this->outputs, $this->getParentSettings('output'));
+        return array_merge($this->targets, $this->getParentSettings('target'));
     }
 
     /**
      * Returns parent settings.
      *
-     * @param string    $type    Setting type (input, worker or output)
+     * @param string    $type    Setting type (source, worker or target)
      * @param Procedure $context
      *
      * @return array Setting collection
@@ -215,9 +215,9 @@ class Procedure
         $context = $this->normalizeContext($context);
 
         $methods = array(
-            'input' => 'getInputs',
+            'source' => 'getSources',
             'worker' => 'getWorkers',
-            'output' => 'getOutputs',
+            'target' => 'getTargets',
         );
 
         if (!array_key_exists($type, $methods) || $context->getParent() === null) {

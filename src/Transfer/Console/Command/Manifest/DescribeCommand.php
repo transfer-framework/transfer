@@ -79,9 +79,9 @@ class DescribeCommand extends ManifestCommand
     {
         $output->writeln(sprintf('%sProcedure <info>%s</info>', str_repeat(' ', $depth), $procedure->getName()));
 
-        $this->describeComponents($procedure->getInputs(), 'INPUTS', $output, $depth);
+        $this->describeComponents($procedure->getSources(), 'SOURCES', $output, $depth);
         $this->describeComponents($procedure->getWorkers(), 'WORKERS', $output, $depth);
-        $this->describeComponents($procedure->getOutputs(), 'OUTPUTS', $output, $depth);
+        $this->describeComponents($procedure->getTargets(), 'TARGETS', $output, $depth);
         $this->describeChildProcedures($procedure->getChildren(), $output, $depth);
 
         $output->write("\n");
@@ -90,7 +90,7 @@ class DescribeCommand extends ManifestCommand
     /**
      * Describes child procedures.
      *
-     * @param array           $children Procedure childnre
+     * @param array           $children Procedure children
      * @param OutputInterface $output   Console output handle
      * @param int             $depth    Current depth
      */

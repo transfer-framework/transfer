@@ -11,8 +11,8 @@ namespace Transfer\Processor;
 
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
-use Transfer\Adapter\InputAdapterInterface;
-use Transfer\Adapter\OutputAdapterInterface;
+use Transfer\Adapter\SourceAdapterInterface;
+use Transfer\Adapter\TargetAdapterInterface;
 use Transfer\Adapter\Transaction\Request;
 use Transfer\Adapter\Transaction\Response;
 use Transfer\Exception\MissingResponseException;
@@ -123,16 +123,16 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
     }
 
     /**
-     * Handles input.
+     * Handles source.
      *
-     * @param InputAdapterInterface $adapter Input adapter
-     * @param Request               $request Request to handle
+     * @param SourceAdapterInterface $adapter Source adapter
+     * @param Request                $request Request to handle
      *
      * @throws MissingResponseException
      *
-     * @return Response Input adapter response
+     * @return Response Source adapter response
      */
-    protected function handleInput(InputAdapterInterface $adapter, Request $request)
+    protected function handleSource(SourceAdapterInterface $adapter, Request $request)
     {
         $this->injectDependencies($adapter);
 
@@ -146,19 +146,19 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
     }
 
     /**
-     * Handles inputs.
+     * Handles sources.
      *
-     * @param array $inputs Inputs
+     * @param array $sources Sources
      *
-     * @return \Iterator Iterator for all input response objects
+     * @return \Iterator Iterator for all source response objects
      */
-    protected function handleInputs(array $inputs)
+    protected function handleSources(array $sources)
     {
         $responses = array();
 
-        foreach ($inputs as $input) {
-            list($adapter, $request) = $input;
-            $responses[] = $this->handleInput($adapter, $request);
+        foreach ($sources as $source) {
+            list($adapter, $request) = $source;
+            $responses[] = $this->handleSource($adapter, $request);
         }
 
         $iterator = new \AppendIterator();
@@ -207,16 +207,16 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
     }
 
     /**
-     * Handles output.
+     * Handles target.
      *
-     * @param OutputAdapterInterface $adapter Output adapter
+     * @param TargetAdapterInterface $adapter Target adapter
      * @param Request                $request Request to handle
      *
      * @throws MissingResponseException
      *
-     * @return Response Output adapter response
+     * @return Response Target adapter response
      */
-    protected function handleOutput(OutputAdapterInterface $adapter, Request $request)
+    protected function handleTarget(TargetAdapterInterface $adapter, Request $request)
     {
         $this->injectDependencies($adapter);
 
@@ -230,19 +230,19 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
     }
 
     /**
-     * Handles outputs.
+     * Handles targets.
      *
-     * @param array   $outputs Outputs
+     * @param array   $targets Targets
      * @param Request $request Request to handle
      *
-     * @return array Output responses
+     * @return array Target responses
      */
-    protected function handleOutputs(array $outputs, Request $request)
+    protected function handleTargets(array $targets, Request $request)
     {
         $responses = array();
 
-        foreach ($outputs as $output) {
-            $responses[] = $this->handleOutput($output, $request);
+        foreach ($targets as $target) {
+            $responses[] = $this->handleTarget($target, $request);
         }
 
         return $responses;

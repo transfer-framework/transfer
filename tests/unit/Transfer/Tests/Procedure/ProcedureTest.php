@@ -15,18 +15,18 @@ use Transfer\Procedure\ProcedureBuilder;
 class ProcedureTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Tests getOutputs method.
+     * Tests getTargets method.
      */
-    public function testGetOutputs()
+    public function testGetTargets()
     {
         $pb = new ProcedureBuilder();
 
-        $adapter = $this->getMock('Transfer\Adapter\OutputAdapterInterface');
+        $adapter = $this->getMock('Transfer\Adapter\TargetAdapterInterface');
 
         $pb
-            ->addOutput($adapter)
+            ->addTarget($adapter)
             ->createProcedure('procedure_1')
-                ->addOutput($adapter)
+                ->addTarget($adapter)
             ->end();
 
         $procedure = $pb->getProcedure();
@@ -35,8 +35,8 @@ class ProcedureTest extends \PHPUnit_Framework_TestCase
 
         /** @var Procedure $child */
         foreach ($children as $child) {
-            $outputs = $child->getOutputs();
-            $this->assertCount(2, $outputs);
+            $targets = $child->getTargets();
+            $this->assertCount(2, $targets);
         }
     }
 }

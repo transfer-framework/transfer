@@ -20,7 +20,7 @@ class StorageStackTest extends \PHPUnit_Framework_TestCase
     public function testConstructor()
     {
         $stack = new StorageStack(array(
-            'local'  => $this->getMock('Transfer\Storage\StorageInterface'),
+            'local' => $this->getMock('Transfer\Storage\StorageInterface'),
             'global' => $this->getMock('Transfer\Storage\StorageInterface'),
         ));
 
@@ -51,7 +51,7 @@ class StorageStackTest extends \PHPUnit_Framework_TestCase
     public function testRemoveScope()
     {
         $stack = new StorageStack(array(
-            'local'  => $this->getMock('Transfer\Storage\StorageInterface'),
+            'local' => $this->getMock('Transfer\Storage\StorageInterface'),
             'global' => $this->getMock('Transfer\Storage\StorageInterface'),
         ));
 

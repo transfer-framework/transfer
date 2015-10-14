@@ -10,8 +10,8 @@
 namespace Transfer\Procedure;
 
 use Transfer\Adapter\CallbackAdapter;
-use Transfer\Adapter\InputAdapterInterface;
-use Transfer\Adapter\OutputAdapterInterface;
+use Transfer\Adapter\SourceAdapterInterface;
+use Transfer\Adapter\TargetAdapterInterface;
 use Transfer\Adapter\Transaction\Request;
 use Transfer\Worker\CallbackWorker;
 use Transfer\Worker\WorkerInterface;
@@ -48,9 +48,9 @@ class ProcedureBuilder
         $definition = array(
             'parent' => $this->context,
             'name' => $name,
-            'inputs' => array(),
+            'sources' => array(),
             'workers' => array(),
-            'outputs' => array(),
+            'targets' => array(),
             'children' => array(),
         );
 
@@ -72,21 +72,21 @@ class ProcedureBuilder
     }
 
     /**
-     * Adds an input instruction to a procedure.
+     * Adds a source instruction to a procedure.
      *
-     * @param InputAdapterInterface|callable $adapter Input adapter
-     * @param Request                        $request Request sent to input adapter
+     * @param SourceAdapterInterface|callable $adapter Source adapter
+     * @param Request                         $request Request sent to source adapter
      *
      * @return $this
      */
-    public function addInput($adapter, Request $request = null)
+    public function addSource($adapter, Request $request = null)
     {
         if ($request === null) {
             $request = new Request();
         }
 
         $this->addDefinition(
-            'inputs',
+            'sources',
             array((is_callable($adapter) ? new CallbackAdapter($adapter, null) : $adapter), $request)
         );
 
@@ -94,16 +94,16 @@ class ProcedureBuilder
     }
 
     /**
-     * Adds an output instruction to a procedure.
+     * Adds a target instruction to a procedure.
      *
-     * @param OutputAdapterInterface|callable $adapter Output adapter
+     * @param TargetAdapterInterface|callable $adapter Target adapter
      *
      * @return $this
      */
-    public function addOutput($adapter)
+    public function addTarget($adapter)
     {
         $this->addDefinition(
-            'outputs',
+            'targets',
             is_callable($adapter) ? new CallbackAdapter(null, $adapter) : $adapter
         );
 

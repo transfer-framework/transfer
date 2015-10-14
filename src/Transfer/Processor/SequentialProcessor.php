@@ -32,17 +32,17 @@ class SequentialProcessor extends EventDrivenProcessor
      */
     protected function handleProcedure(Procedure $procedure)
     {
-        foreach ((array) $procedure->getInputs() as $input) {
-            list($adapter, $request) = $input;
+        foreach ((array) $procedure->getSources() as $source) {
+            list($adapter, $request) = $source;
 
-            $response = $this->handleInput($adapter, $request);
+            $response = $this->handleSource($adapter, $request);
 
             while ($object = $this->nextObject($response->getData())) {
                 $storage = $this->prepareLocalStorage($object);
 
                 $this->handleWorkers($procedure->getWorkers(), $object, $storage);
 
-                $this->handleOutputs($procedure->getOutputs(), new Request($storage->all()));
+                $this->handleTargets($procedure->getTargets(), new Request($storage->all()));
 
                 $this->mergeStorage($storage);
             }

@@ -32,21 +32,21 @@ class DescribeCommandTest extends \PHPUnit_Framework_TestCase
      */
     public function testExecute()
     {
-        $input = $this->getMock('Transfer\Adapter\InputAdapterInterface');
+        $source = $this->getMock('Transfer\Adapter\SourceAdapterInterface');
         $worker = $this->getMock('Transfer\Worker\WorkerInterface');
-        $output = $this->getMock('Transfer\Adapter\OutputAdapterInterface');
+        $target = $this->getMock('Transfer\Adapter\TargetAdapterInterface');
 
         $manifestProphecy = $this->prophesize('Transfer\Manifest\ManifestInterface');
         $manifestProphecy->getName()->willReturn('mock');
         $manifestProphecy->configureProcedureBuilder(Argument::type('Transfer\Procedure\ProcedureBuilder'))->will(
-            function ($args) use ($input, $worker, $output) {
+            function ($args) use ($source, $worker, $target) {
                 /** @var ProcedureBuilder $builder */
                 $builder = $args[0];
                 $builder
                     ->createProcedure('level_1')
-                        ->addInput($input)
+                        ->addSource($source)
                         ->addWorker($worker)
-                        ->addOutput($output)
+                        ->addTarget($target)
                     ->end();
             }
         );
