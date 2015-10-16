@@ -23,7 +23,7 @@ class PostWorkerEvent extends Event
     protected $worker;
 
     /**
-     * @var mixed Object sent to worker
+     * @var mixed Object received from worker
      */
     protected $object;
 
@@ -34,7 +34,7 @@ class PostWorkerEvent extends Event
 
     /**
      * @param WorkerInterface $worker      Worker
-     * @param mixed           $object      Object sent to worker
+     * @param mixed           $object      Object received from worker
      * @param float           $elapsedTime Elapsed time
      */
     public function __construct(WorkerInterface $worker, $object, $elapsedTime = 0.0)
@@ -55,7 +55,7 @@ class PostWorkerEvent extends Event
     }
 
     /**
-     * Returns object which was sent to worker.
+     * Returns object which was received from worker.
      *
      * @return mixed Object sent to worker
      */
