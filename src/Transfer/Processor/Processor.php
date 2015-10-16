@@ -190,6 +190,8 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
             $storage->remove($object);
             $storage->add($modifiedObject);
         }
+
+        return $modifiedObject;
     }
 
     /**
@@ -201,8 +203,10 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
      */
     protected function handleWorkers(array $workers, $object, StorageInterface $storage)
     {
+        $nextObject = $object;
+
         foreach ($workers as $worker) {
-            $this->handleWorker($worker, $object, $storage);
+            $nextObject = $this->handleWorker($worker, $nextObject, $storage);
         }
     }
 

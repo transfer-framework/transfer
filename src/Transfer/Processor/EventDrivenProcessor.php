@@ -122,9 +122,11 @@ abstract class EventDrivenProcessor extends Processor
     {
         $this->dispatcher->dispatch(TransferEvents::PRE_WORKER, new Events\PreWorkerEvent($worker, $object));
 
-        parent::handleWorker($worker, $object, $storage);
+        $modifiedObject = parent::handleWorker($worker, $object, $storage);
 
-        $this->dispatcher->dispatch(TransferEvents::POST_WORKER, new Events\PostWorkerEvent($worker, $object, 0.0));
+        $this->dispatcher->dispatch(TransferEvents::POST_WORKER, new Events\PostWorkerEvent($worker, $modifiedObject, 0.0));
+
+        return $modifiedObject;
     }
 
     /**

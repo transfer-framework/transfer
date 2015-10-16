@@ -240,4 +240,57 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
 
         $processor->process();
     }
+
+    public function testWorkerChaining()
+    {
+        $actual = array();
+
+        /** @var object $procedureProphecy */
+        $procedureProphecy = $this->prophesize('Transfer\Procedure\Procedure');
+        $procedureProphecy->hasChildren()->willReturn(false);
+
+        $procedureProphecy->getSources()->willReturn(array(
+            array(
+                new CallbackAdapter(
+                    function () {
+                        return new Response(array('1', '2', '3'));
+                    }
+                ),
+                new Request(),
+            ),
+        ));
+
+        $procedureProphecy->getWorkers()->willReturn(array(
+            new CallbackWorker(function ($object) {
+                return $object.'X';
+            }),
+            new CallbackWorker(function ($object) {
+                return $object.'X';
+            }),
+        ));
+
+        $procedureProphecy->getTargets()->willReturn(array(
+            new CallbackAdapter(
+                null,
+                function () {
+                    return new Response();
+                }
+            ),
+        ));
+
+        $procedure = $procedureProphecy->reveal();
+
+        $processor = new SequentialProcessor();
+        $processor->addProcedure($procedure);
+
+        $processor->addListener(TransferEvents::PRE_ADAPTER_SEND, function (PreAdapterSendEvent $event) use (&$actual) {
+            foreach ($event->getRequest()->getData() as $object) {
+                $actual[] = $object;
+            }
+        });
+
+        $processor->process();
+
+        $this->assertEquals(array('1XX', '2XX', '3XX'), $actual);
+    }
 }
