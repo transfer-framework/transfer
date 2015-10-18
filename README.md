@@ -15,6 +15,10 @@ Install the latest version with:
 
 This requires [Composer](https://getcomposer.org/download/) to be installed globally in your system.
 
+Features
+--------
+
+You can find a collection of useful components in the [Transfer Commons](https://github.com/transfer-framework/commons) repository.
 
 Contributors
 ------------
