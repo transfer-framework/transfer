@@ -11,7 +11,7 @@ Installation
 
 Install the latest version with:
 
-`$ composer require transfer/transfer`
+    $ composer require transfer/transfer 
 
 This requires [Composer](https://getcomposer.org/download/) to be installed globally in your system.
 
