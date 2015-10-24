@@ -20,6 +20,11 @@ Features
 
 You can find a collection of useful components in the [Transfer Commons](https://github.com/transfer-framework/commons) repository.
 
+Documentation
+-------------
+
+We are working towards releasing the documentation very soon.
+
 Contributors
 ------------
 
