@@ -20,7 +20,7 @@ class TransferApplicationTest extends \PHPUnit_Framework_TestCase
     {
         $application = new TransferApplication();
 
-        $this->assertEquals('v0.3', $application->getVersion());
+        $this->assertEquals('v1.0', $application->getVersion());
         $this->assertCount(5, $application->all());
     }
 }
