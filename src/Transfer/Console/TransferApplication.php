@@ -19,7 +19,7 @@ class TransferApplication extends Application
 {
     public function __construct()
     {
-        parent::__construct('Transfer Command Line Interface', 'v0.3');
+        parent::__construct('Transfer Command Line Interface', 'v1.0');
 
         $this->addCommands(array(
             new Commands\Manifest\ListCommand(),
