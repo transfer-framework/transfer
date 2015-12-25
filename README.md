@@ -23,7 +23,7 @@ You can find a collection of useful components in the [Transfer Commons](https:/
 Documentation
 -------------
 
-We are working towards releasing the documentation very soon.
+The documenation is available in the [Transfer Documenation](https://github.com/transfer-framework/docs) repository.
 
 Contributors
 ------------
