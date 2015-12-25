@@ -9,27 +9,11 @@
 
 namespace Transfer\Tests\Console\Command;
 
-use Symfony\Component\Console\Helper\HelperSet;
-use Symfony\Component\Console\Helper\TableHelper;
 use Symfony\Component\Console\Tester\CommandTester;
 use Transfer\Console\Command\Manifest\ListCommand;
 
 class ListCommandTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var HelperSet
-     */
-    private $helperSet;
-
-    /**
-     * Set up.
-     */
-    protected function setUp()
-    {
-        $this->helperSet = new HelperSet();
-        $this->helperSet->set(new TableHelper());
-    }
-
     /**
      * Tests constructor.
      */
@@ -55,8 +39,6 @@ class ListCommandTest extends \PHPUnit_Framework_TestCase
         $chain = $chainProphecy->reveal();
 
         $command = new ListCommand();
-        $command->setHelperSet($this->helperSet);
-
         $command->setChain($chain);
 
         $tester = new CommandTester($command);
@@ -80,7 +62,6 @@ DISPLAY;
     public function testExecuteWithMissingChain()
     {
         $command = new ListCommand();
-        $command->setHelperSet($this->helperSet);
 
         $this->setExpectedException('Transfer\Exception\MissingManifestChainException');
 
@@ -94,7 +75,6 @@ DISPLAY;
     public function testExecuteWithNonExistingChain()
     {
         $command = new ListCommand();
-        $command->setHelperSet($this->helperSet);
 
         $this->setExpectedException('\InvalidArgumentException');
 
@@ -110,7 +90,6 @@ DISPLAY;
     public function testExecuteWithValidChain()
     {
         $command = new ListCommand();
-        $command->setHelperSet($this->helperSet);
 
         $tester = new CommandTester($command);
         $tester->execute(array(
