@@ -9,6 +9,7 @@
 
 namespace Transfer\Console\Command\Manifest;
 
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Transfer\Manifest\ManifestInterface;
@@ -46,7 +47,7 @@ class ListCommand extends ManifestCommand
             $rows[] = array($manifest->getName());
         }
 
-        $table = $this->getHelper('table');
+        $table = new Table($output);
 
         $table->setHeaders(array('Manifest name'))
               ->setRows($rows);
