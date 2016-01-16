@@ -14,6 +14,7 @@ use Transfer\Adapter\SourceAdapterInterface;
 use Transfer\Adapter\TargetAdapterInterface;
 use Transfer\Adapter\Transaction\Request;
 use Transfer\Worker\CallbackWorker;
+use Transfer\Worker\SplitterWorker;
 use Transfer\Worker\WorkerInterface;
 
 /**
@@ -125,6 +126,16 @@ class ProcedureBuilder
         );
 
         return $this;
+    }
+
+    /**
+     * Pushes the array elements to the local storage.
+     *
+     * @return $this
+     */
+    public function split()
+    {
+        return $this->addWorker(new SplitterWorker());
     }
 
     /**

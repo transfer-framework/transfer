@@ -184,7 +184,7 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
 
         $modifiedObject = $worker->handle($object);
 
-        if ($modifiedObject === null) {
+        if ($modifiedObject === null && $object !== null) {
             $storage->remove($object);
         } elseif ($modifiedObject !== $object) {
             $storage->remove($object);
@@ -198,15 +198,14 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
      * Handles workers.
      *
      * @param array            $workers Workers
-     * @param mixed            $object  Object to handle
      * @param StorageInterface $storage Associated storage
      */
-    protected function handleWorkers(array $workers, $object, StorageInterface $storage)
+    protected function handleWorkers(array $workers, StorageInterface $storage)
     {
-        $nextObject = $object;
-
         foreach ($workers as $worker) {
-            $nextObject = $this->handleWorker($worker, $nextObject, $storage);
+            foreach ($storage->all() as $element) {
+                $this->handleWorker($worker, $element, $storage);
+            }
         }
     }
 
@@ -301,6 +300,33 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
 
         if ($component instanceof LoggerAwareInterface && $this->logger instanceof LoggerInterface) {
             $component->setLogger($this->logger);
+        }
+    }
+
+    /**
+     * Prepares local storage.
+     *
+     * @param mixed $object Initial object
+     *
+     * @return InMemoryStorage Local storage
+     */
+    protected function prepareLocalStorage($object)
+    {
+        $storage = $this->createStorage('local');
+        $storage->add($object);
+
+        return $storage;
+    }
+
+    /**
+     * Merges local storage with global storage.
+     *
+     * @param StorageInterface $storage Local storage
+     */
+    protected function mergeStorage(StorageInterface $storage)
+    {
+        foreach ($storage->all() as $id => $object) {
+            $this->stack->getScope('global')->add($object);
         }
     }
 }
