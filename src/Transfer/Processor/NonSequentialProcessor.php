@@ -33,9 +33,11 @@ class NonSequentialProcessor extends EventDrivenProcessor
         $response = $this->handleSources($procedure->getSources());
 
         while ($object = $this->nextObject($response)) {
-            $this->stack->getScope('global')->add($object);
+            $storage = $this->prepareLocalStorage($object);
 
-            $this->handleWorkers($procedure->getWorkers(), $object, $this->stack->getScope('global'));
+            $this->handleWorkers($procedure->getWorkers(), $storage);
+
+            $this->mergeStorage($storage);
         }
 
         $this->handleTargets($procedure->getTargets(), new Request($this->stack->getScope('global')->all()));
