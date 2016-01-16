@@ -18,6 +18,7 @@ use Transfer\Data\ValueObject;
 use Transfer\Event\PreAdapterSendEvent;
 use Transfer\Event\TransferEvents;
 use Transfer\Procedure\Procedure;
+use Transfer\Procedure\ProcedureBuilder;
 use Transfer\Processor\Processor;
 use Transfer\Processor\SequentialProcessor;
 use Transfer\Worker\CallbackWorker;
@@ -292,5 +293,33 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $processor->process();
 
         $this->assertEquals(array('1XX', '2XX', '3XX'), $actual);
+    }
+
+    public function testObjectSplitting()
+    {
+        $builder = new ProcedureBuilder();
+
+        $expected = array('f', 'o', 'x');
+
+        $actual = array();
+
+        $builder
+            ->addSource(function () {
+                return new Response(array(array(array('f'), array('o'), array('x'))));
+            })
+            ->split()
+            ->split()
+            ->addWorker(function ($object) use (&$actual) {
+                $actual[] = $object;
+            })
+            ->end();
+
+        $processor = new SequentialProcessor();
+
+        $processor
+            ->addProcedure($builder->getProcedure())
+            ->process();
+
+        $this->assertEquals($expected, $actual);
     }
 }
