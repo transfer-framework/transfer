@@ -7,7 +7,7 @@
  * in the root directory.
  */
 
-namespace Transfer\Tests\Console\Command;
+namespace Transfer\Tests\Console\Command\Manifest;
 
 use Symfony\Component\Console\Tester\CommandTester;
 use Transfer\Console\Command\Manifest\ListCommand;
