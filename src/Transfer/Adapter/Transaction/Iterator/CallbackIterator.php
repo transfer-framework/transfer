@@ -74,7 +74,7 @@ class CallbackIterator implements \Iterator
      */
     public function valid()
     {
-        return (boolean) call_user_func_array($this->valid, array($this));
+        return (bool) call_user_func_array($this->valid, array($this));
     }
 
     /**
