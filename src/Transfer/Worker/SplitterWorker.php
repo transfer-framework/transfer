@@ -34,7 +34,5 @@ class SplitterWorker implements WorkerInterface, StorageStackAwareInterface
         foreach ($object as $element) {
             $storage->add($element);
         }
-
-        return;
     }
 }
