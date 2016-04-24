@@ -7,7 +7,7 @@
  * in the root directory.
  */
 
-namespace Transfer\tests\functional;
+namespace Transfer\Tests\Functional;
 
 use Transfer\Manifest\ManifestInterface;
 use Transfer\Manifest\ManifestRunner;

@@ -7,7 +7,7 @@
  * in the root directory.
  */
 
-namespace Transfer\Tests\Adapter\Stream;
+namespace Transfer\Tests\Adapter\Transaction\Iterator;
 
 use Transfer\Adapter\Transaction\Iterator\CallbackIterator;
 use Transfer\Data\ValueObject;
