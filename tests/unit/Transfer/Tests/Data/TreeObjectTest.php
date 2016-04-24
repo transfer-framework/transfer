@@ -7,7 +7,7 @@
  * in the root directory.
  */
 
-namespace Transfer\Tests\Object;
+namespace Transfer\Tests\Data;
 
 use Transfer\Data\TreeObject;
 use Transfer\Data\ValueObject;
