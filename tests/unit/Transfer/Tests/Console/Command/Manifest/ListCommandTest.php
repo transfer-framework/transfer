@@ -44,7 +44,7 @@ class ListCommandTest extends \PHPUnit_Framework_TestCase
         $tester = new CommandTester($command);
         $tester->execute(array());
 
-        $expectedDisplay = <<<DISPLAY
+        $expectedDisplay = <<<'DISPLAY'
 +---------------+
 | Manifest name |
 +---------------+
@@ -96,7 +96,7 @@ DISPLAY;
             '--chain' => __DIR__.'/../../../../../../fixtures/manifest_chain.php',
         ));
 
-        $expectedDisplay = <<<DISPLAY
+        $expectedDisplay = <<<'DISPLAY'
 +---------------+
 | Manifest name |
 +---------------+

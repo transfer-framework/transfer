@@ -68,7 +68,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
             array(
                 new CallbackAdapter(
                     function () {
-                        return;
+
                     }
                 ),
                 new Request(),
@@ -112,7 +112,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
             new CallbackAdapter(
                 null,
                 function () {
-                    return;
+
                 }
             ),
         ));
