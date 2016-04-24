@@ -81,7 +81,7 @@ class LocalDirectoryAdapter implements SourceAdapterInterface
      */
     public function validCallback(CallbackIterator $iterator)
     {
-        return (boolean) array_key_exists($iterator->key(), $this->fileNames);
+        return (bool) array_key_exists($iterator->key(), $this->fileNames);
     }
 
     /**
