@@ -9,7 +9,7 @@ Transfer is an abstraction layer providing a flexible framework for common data 
 Installation
 ------------
 
-Install the latest version with:
+Install the latest version with:http://transfer-framework.github.io/docs/1.0/
 
     $ composer require transfer/transfer 
 
@@ -23,7 +23,7 @@ You can find a collection of useful components in the [Transfer Commons](https:/
 Documentation
 -------------
 
-The documenation is available in the [Transfer Documenation](https://github.com/transfer-framework/docs) repository.
+The documentation is available on the [offical Transfer website](http://transfer-framework.github.io/docs/1.0/). If you would like to contribute, see the [Transfer Documentation](https://github.com/transfer-framework/docs) repository.
 
 Contributors
 ------------
