@@ -9,7 +9,7 @@ Transfer is an abstraction layer providing a flexible framework for common data 
 Installation
 ------------
 
-Install the latest version with:http://transfer-framework.github.io/docs/1.0/
+Install the latest version with:
 
     $ composer require transfer/transfer 
 
