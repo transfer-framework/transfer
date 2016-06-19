@@ -81,6 +81,14 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
     }
 
     /**
+     * @return LoggerInterface Logger instance
+     */
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function process()

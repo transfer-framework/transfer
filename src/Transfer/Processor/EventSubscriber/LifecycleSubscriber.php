@@ -17,7 +17,7 @@ use Transfer\Event\TransferEvents;
 /**
  * Listens to and logs processor events.
  */
-class Logger implements EventSubscriberInterface
+class LifecycleSubscriber implements EventSubscriberInterface
 {
     /**
      * @var LoggerInterface Logger

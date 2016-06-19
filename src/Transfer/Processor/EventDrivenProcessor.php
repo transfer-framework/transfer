@@ -19,7 +19,7 @@ use Transfer\Adapter\Transaction\Request;
 use Transfer\Event as Events;
 use Transfer\Event\TransferEvents;
 use Transfer\Procedure\Procedure;
-use Transfer\Processor\EventSubscriber\Logger;
+use Transfer\Processor\EventSubscriber\LifecycleSubscriber;
 use Transfer\Storage\StorageInterface;
 use Transfer\Worker\WorkerInterface;
 
@@ -71,7 +71,7 @@ abstract class EventDrivenProcessor extends Processor
     {
         parent::setLogger($logger);
 
-        $this->addSubscriber(new Logger($logger));
+        $this->addSubscriber(new LifecycleSubscriber($logger));
     }
 
     /**
