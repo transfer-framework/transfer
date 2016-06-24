@@ -79,7 +79,8 @@ class ProcedureBuilderTest extends \PHPUnit_Framework_TestCase
             return new Response();
         });
 
-        $pb->addWorker(function (ObjectInterface $object) {});
+        $pb->addWorker(function (ObjectInterface $object) {
+        });
 
         $pb->addTarget(function (Request $request) {
             return new Response();

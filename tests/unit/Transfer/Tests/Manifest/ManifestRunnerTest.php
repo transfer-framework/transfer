@@ -40,7 +40,6 @@ class ManifestRunnerTest extends \PHPUnit_Framework_TestCase
             $processor->addListener(TransferEvents::POST_PROCESS, function () use (&$finished) {
                 $finished = true;
             });
-
         });
         /** @var ManifestInterface $manifest */
         $manifest = $manifestProphecy->reveal();
