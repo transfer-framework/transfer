@@ -54,6 +54,21 @@ class ChainStorage implements StorageInterface
     /**
      * {@inheritdoc}
      */
+    public function set($id, $object)
+    {
+        /** @var StorageInterface $storage */
+        foreach ($this->storageCollection as $storage) {
+            if ($storage->set($id, $object)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function contains($object)
     {
         /** @var StorageInterface $storage */
