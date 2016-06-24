@@ -4,7 +4,7 @@ sudo: false
 
 matrix:
     include:
-        - php: 5.4
+        - php: 5.4.37
         - php: 5.5
         - php: 5.6
         - php: 7.0
