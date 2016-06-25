@@ -20,11 +20,46 @@ class DataAggregate implements \IteratorAggregate
     protected $iterator;
 
     /**
-     * @param array|\Iterator|\Traversable $data Data array or iterator
+     * @var mixed Original data
+     */
+    protected $originalData;
+
+    /**
+     * @param mixed $data Original data
      */
     public function __construct($data)
     {
         $this->setData($data);
+    }
+
+    /**
+     * Returns original data.
+     *
+     * @return mixed Original data
+     */
+    public function getData()
+    {
+        return $this->originalData;
+    }
+
+    /**
+     * Assigns data to the aggregate.
+     *
+     * @param mixed $data
+     */
+    public function setData($data)
+    {
+        $this->originalData = $data;
+
+        if ($data instanceof \Iterator) {
+            $this->iterator = $data;
+        }
+        elseif (is_array($data)) {
+            $this->iterator = new \ArrayIterator($data);
+        }
+        else {
+            $this->iterator = new \ArrayIterator(array($data));
+        }
     }
 
     /**
@@ -33,33 +68,6 @@ class DataAggregate implements \IteratorAggregate
      * If the data aggregate was initialized with an array, an \ArrayIterator will be returned.
      *
      * @return \Iterator Data iterator
-     */
-    public function getData()
-    {
-        return $this->iterator;
-    }
-
-    /**
-     * Assigns data to the aggregate.
-     *
-     * @param array|\Iterator|\Traversable $object
-     */
-    public function setData($object)
-    {
-        if ($object instanceof \Iterator) {
-            $this->iterator = $object;
-        } elseif (is_array($object)) {
-            $this->iterator = new \ArrayIterator($object);
-        } else {
-            throw new \InvalidArgumentException(sprintf(
-                'Expecting object of type array or \Iterator, %s given',
-                gettype($object)
-            ));
-        }
-    }
-
-    /**
-     * @see self::getData()
      */
     public function getIterator()
     {

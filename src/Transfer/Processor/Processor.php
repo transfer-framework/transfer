@@ -165,7 +165,7 @@ abstract class Processor implements ProcessorInterface, LoggerAwareInterface, St
 
         /** @var Response $response */
         foreach ($responses as $response) {
-            $iterator->append($response->getData());
+            $iterator->append($response->getIterator());
         }
 
         return $iterator;
