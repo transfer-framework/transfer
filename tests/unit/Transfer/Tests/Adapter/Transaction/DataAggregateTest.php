@@ -19,23 +19,15 @@ class DataAggregateTest extends \PHPUnit_Framework_TestCase
     public function testConstructWithValidArgument()
     {
         $aggregate = new DataAggregate(array());
-
-        $this->assertInstanceOf('\ArrayIterator', $aggregate->getData());
+        $this->assertInstanceOf('\ArrayIterator', $aggregate->getIterator());
+        $this->assertInternalType('array', $aggregate->getData());
 
         $aggregate = new DataAggregate(new \ArrayIterator());
-
+        $this->assertInstanceOf('\ArrayIterator', $aggregate->getIterator());
         $this->assertInstanceOf('\ArrayIterator', $aggregate->getData());
-    }
 
-    /**
-     * Tests construct with invalid argument.
-     */
-    public function testConstructWithInvalidArgument()
-    {
-        $this->setExpectedException('\InvalidArgumentException');
-
-        $aggregate = new DataAggregate(null);
-
-        $this->assertNull($aggregate->getData());
+        $aggregate = new DataAggregate('string');
+        $this->assertInstanceOf('\ArrayIterator', $aggregate->getIterator());
+        $this->assertInternalType('string', $aggregate->getData());
     }
 }
