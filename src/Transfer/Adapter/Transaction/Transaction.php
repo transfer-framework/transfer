@@ -61,4 +61,15 @@ abstract class Transaction extends DataAggregate
     {
         $this->headers = $headers;
     }
+
+    /**
+     * Sets a header.
+     *
+     * @param string $key   Key
+     * @param mixed  $value Value
+     */
+    public function setHeader($key, $value)
+    {
+        $this->headers[$key] = $value;
+    }
 }
