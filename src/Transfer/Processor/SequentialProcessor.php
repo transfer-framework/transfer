@@ -35,7 +35,7 @@ class SequentialProcessor extends EventDrivenProcessor
 
             $response = $this->handleSource($adapter, $request);
 
-            while ($object = $this->nextObject($response->getData())) {
+            while ($object = $this->nextObject($response->getIterator())) {
                 $storage = $this->prepareLocalStorage($object);
 
                 $this->handleWorkers($procedure->getWorkers(), $storage);
