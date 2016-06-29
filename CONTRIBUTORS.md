@@ -1,5 +1,4 @@
 Contributors
 ============
 
-* Valentins Jonovs (valisj)
-* Netmaking (http://www.netmaking.no)
+* Netmaking AS (http://www.netmaking.no)
