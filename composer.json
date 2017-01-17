@@ -1,7 +1,7 @@
 {
   "name":         "transfer/transfer",
   "type":         "library",
-  "description":  "Data processing framework",
+  "description":  "Framework for data import and export",
   "keywords":     ["import", "export", "data"],
   "license":      "MIT",
   "authors":      [
