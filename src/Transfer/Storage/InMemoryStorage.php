@@ -38,6 +38,16 @@ class InMemoryStorage extends AbstractStorage
     /**
      * {@inheritdoc}
      */
+    public function set($id, $object)
+    {
+        $this->data[$id] = $object;
+
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function contains($object)
     {
         return $this->containsId($this->hashingStrategy->hash($object));

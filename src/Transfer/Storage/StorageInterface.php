@@ -25,6 +25,16 @@ interface StorageInterface
     public function add($object, $id = null);
 
     /**
+     * Sets an object in storage with an explicitly set ID.
+     *
+     * @param string $id     ID
+     * @param mixed  $object Object
+     *
+     * @return bool Returns true, if value had been set, otherwise false
+     */
+    public function set($id, $object);
+
+    /**
      * Tests whether an object is in storage.
      *
      * @param mixed $object Object
